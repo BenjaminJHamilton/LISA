@@ -16,17 +16,29 @@ class SavingsAccount:
         self.balance = 0
 
     def deposit(self, x: float):
+
+        limits = {
+            "isa": 20000,
+            "lisa": 4000
+        }
+
+        if (x > limits[self.type]):
+            raise ValueError("Deposit greater than allowed.")
+
+
         # add in the govt bonus for lisa
         if (self.type == "lisa"):
             x = x * self.LISA_BONUS
         self.balance += x
 
-    def add_interest(self, rate):
-        self.balance = self.balance + (1 * rate/100)
+    def add_interest(self, rate: float):
+        self.balance = self.balance * (1 + rate/100)
 
-    def withdraw(self, house_price):
-
-        if (self.type == "lisa" & house_price > 450000):
+    def withdraw(self, house_price: float) -> float:
+        
+        if (self.type == "lisa" and house_price > 450000):
             return self.balance * self.LISA_PENALTY
         
         return self.balance
+
+        
