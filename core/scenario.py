@@ -28,6 +28,8 @@ class Scenario:
 
         self.accounts.append(account)
         self.params.append(params)
+
+        self.history = []  # Initialize history for the scenario
          
 
     def get_accounts(self) -> List[SavingsAccount]:
@@ -42,14 +44,20 @@ class Scenario:
         """
         Runs the scenario by iterating through all accounts and performing actions.
         """
+        
         for account_info in zip(self.accounts, self.params):
             account, params = account_info
+            account_history = []  # Initialize history for each account
+
             for year in range(years):
                 # Deposit the amount into the account
                 account.deposit(params['deposit'])
                 # Add interest to the account
                 account.add_interest(params['interest_rate'])
-                
+
+                account_history.append(account.balance)  # Store the balance after each year
+            
+            self.history.append(account_history)  # Store the history for the account
 
     def withdraw(self, house_price: float) -> float:
         """
@@ -62,6 +70,14 @@ class Scenario:
         for account in self.accounts:
             total_withdrawn += account.withdraw(house_price)
         return total_withdrawn
+    
+    def get_history(self) -> List[List[float]]:
+        """
+        Returns the history of balances for each account.
+
+        :return: List of lists, where each inner list contains the balance history for an account.
+        """
+        return self.history
     
     def _check_params(self, params: dict):
         """
