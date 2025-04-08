@@ -15,6 +15,8 @@ class Scenario:
         self.accounts = []  # List to hold accounts associated with the scenario
         self.params = [] # List to hold parameters associated with the each account
 
+        self.history = []  # Initialize history for the scenario
+
     def add_account(self, account: SavingsAccount, params: dict):
         """
         Adds an account to the scenario.
@@ -28,8 +30,6 @@ class Scenario:
 
         self.accounts.append(account)
         self.params.append(params)
-
-        self.history = []  # Initialize history for the scenario
          
 
     def get_accounts(self) -> List[SavingsAccount]:
